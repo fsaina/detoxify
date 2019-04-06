@@ -1,10 +1,14 @@
+const Classifier = require('./classifier/classifier.js');
+const Vectorizer = require('./classifier/vectorizer.js');
+
 /**
  * Returns 1 if comment is toxic, 0 otherwise.
  *
  * @param comment is null terminated string representation of a comment.
  */
 function classifyComment(comment) {
-    return 1;
+    const vector = vectorizer.vectorize(comment);
+    return classifier.predict(vector);
 }
 
 function addBlurFilter(element) {
@@ -81,6 +85,8 @@ function activePollFor(elementId) {
 }
 
 let globalCommentId = 0;
+const vectorizer = new Vectorizer();
+const classifier = new Classifier();
 
 window.browser = (function () {
     return window.msBrowser ||

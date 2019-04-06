@@ -1,4 +1,4 @@
-var AdaBoostClassifier = function() {
+module.exports = function() {
 
     var findMax = function(nums) {
         var index = 0;
