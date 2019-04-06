@@ -372,4 +372,4 @@ fabric.properties
 
 
 # Train-test data
-./ml-workground/data/*
+ml-workground/data/*
