@@ -9,7 +9,10 @@ const NaiveBayes = require('./classifier/bayes.js');
  */
 function classifyComment(comment) {
     // const vector = vectorizer.vectorize(comment);
-    return classifier.categorize(comment);
+    var classa = classifier.categorize(comment);
+    console.log(classa);
+    return classa;
+
 }
 
 function addBlurFilter(element) {
@@ -35,7 +38,7 @@ function markCommentIfToxic(commentNode) {
     let commentTextElement = commentNode.children[0].children[1].children[1].children[1].children[0];
     let commentInnerText = commentTextElement.innerText;
 
-    if (classifyComment(commentInnerText) === 'positive') {
+    if (classifyComment(commentInnerText) === '1') {
         console.log('Toxic comment: ' + commentInnerText);
         addBlurFilter(commentTextElement);
         addHooverListener(commentTextElement);
