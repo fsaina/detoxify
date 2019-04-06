@@ -24,8 +24,10 @@
   },
   "homepage": "https://github.com/fsaina/detoxify#readme",
   "dependencies": {
+    "bayes": "0.0.7",
     "compromise": "^11.13.2",
     "csv-parser": "^2.2.0",
+    "ml-confusion-matrix": "^0.3.0",
     "normalize": "^0.3.1"
   }
 }
