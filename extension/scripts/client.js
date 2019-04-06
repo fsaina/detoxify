@@ -61,6 +61,13 @@ function addMutationObserverOnCommentsLoading(target) {
 
 function activePollForContentsElement(commentsElement) {
     const interval = setInterval(function () {
+
+        if (commentsElement === null
+        || commentsElement[1] === null
+        || commentsElement[2] === null) {
+            return;
+        }
+
         const contentsElement = commentsElement.children[1].children[2];
         if (contentsElement !== null) {
             clearInterval(interval);
