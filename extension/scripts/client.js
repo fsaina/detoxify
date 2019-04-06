@@ -66,7 +66,9 @@ function activePollForContentsElement(commentsElement) {
     const interval = setInterval(function () {
 
         if (commentsElement === null
+        || typeof(commentsElement) != 'undefined'
         ||  commentsElement.children[1] === null
+        || typeof(commentsElement.children[1]) != 'undefined'
         ||  commentsElement.children[1].children[2] === null) {
             return;
         }
