@@ -22,5 +22,10 @@
   "bugs": {
     "url": "https://github.com/fsaina/detoxify/issues"
   },
-  "homepage": "https://github.com/fsaina/detoxify#readme"
+  "homepage": "https://github.com/fsaina/detoxify#readme",
+  "dependencies": {
+    "compromise": "^11.13.2",
+    "csv-parser": "^2.2.0",
+    "normalize": "^0.3.1"
+  }
 }
