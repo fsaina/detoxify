@@ -16,7 +16,7 @@ function classifyComment(comment) {
 }
 
 function addBlurFilter(element) {
-    element.style.filter = "blur(2px)";
+    element.style.filter = "blur(3px)";
 }
 
 function removeBlurFilter(element) {
@@ -66,8 +66,8 @@ function activePollForContentsElement(commentsElement) {
     const interval = setInterval(function () {
 
         if (commentsElement === null
-        || commentsElement[1] === null
-        || commentsElement[2] === null) {
+        ||  commentsElement.children[1] === null
+        ||  commentsElement.children[1].children[2] === null) {
             return;
         }
 
