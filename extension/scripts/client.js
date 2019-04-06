@@ -107,7 +107,6 @@ function initializeDetoxifier() {
     activePollFor('comments');
 }
 
-// const vectorizer = new Vectorizer();
 const classifier = new NaiveBayes();
 let globalCommentId = 0;
 let observer;
@@ -121,6 +120,10 @@ window.browser = (function () {
 browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     if (request.message === 'tab-updated') {
         initializeDetoxifier();
+    }
+    if (request.message === 'pause') {
+        console.log('Detoxify disabled!');
+
     }
 });
 
