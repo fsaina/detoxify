@@ -1,5 +1,6 @@
-const Classifier = require('./classifier/classifier.js');
-const Vectorizer = require('./classifier/vectorizer.js');
+// const Classifier = require('./classifier/classifier.js');
+const NaiveBayes = require('./classifier/bayes.js');
+// const Vectorizer = require('./classifier/vectorizer.js');
 
 /**
  * Returns 1 if comment is toxic, 0 otherwise.
@@ -7,8 +8,8 @@ const Vectorizer = require('./classifier/vectorizer.js');
  * @param comment is null terminated string representation of a comment.
  */
 function classifyComment(comment) {
-    const vector = vectorizer.vectorize(comment);
-    return classifier.predict(vector);
+    // const vector = vectorizer.vectorize(comment);
+    return classifier.categorize(comment);
 }
 
 function addBlurFilter(element) {
@@ -34,19 +35,19 @@ function markCommentIfToxic(commentNode) {
     let commentTextElement = commentNode.children[0].children[1].children[1].children[1].children[0];
     let commentInnerText = commentTextElement.innerText;
 
-    if (classifyComment(commentInnerText) === 1) {
+    if (classifyComment(commentInnerText) === 'positive') {
         console.log('Toxic comment: ' + commentInnerText);
         addBlurFilter(commentTextElement);
         addHooverListener(commentTextElement);
     }
 }
 
-function addMutationObserver(target) {
+function addMutationObserverOnCommentsLoading(target) {
     const config = {
         childList: true
     };
 
-    const observer = new MutationObserver(function(mutations) {
+    observer = new MutationObserver(function(mutations) {
         mutations.forEach(function (mutation) {
             let commentNode = mutation.target.childNodes[globalCommentId];
             console.log('Mutation #' + globalCommentId + ': ' + commentNode);
@@ -64,7 +65,7 @@ function activePollForContentsElement(commentsElement) {
         if (contentsElement !== null) {
             clearInterval(interval);
             console.log('Loaded: contents');
-            addMutationObserver(contentsElement);
+            addMutationObserverOnCommentsLoading(contentsElement);
         } else {
             console.log('Not loaded yet: contents');
         }
@@ -84,9 +85,20 @@ function activePollFor(elementId) {
     }, 100);
 }
 
+function initializeDetoxifier() {
+    console.log('Initializing detoxification...');
+    globalCommentId = 0;
+    if (observer !== undefined && observer !== null) {
+        observer.disconnect();
+    }
+
+    activePollFor('comments');
+}
+
+// const vectorizer = new Vectorizer();
+const classifier = new NaiveBayes();
 let globalCommentId = 0;
-const vectorizer = new Vectorizer();
-const classifier = new Classifier();
+let observer;
 
 window.browser = (function () {
     return window.msBrowser ||
@@ -94,5 +106,10 @@ window.browser = (function () {
         window.chrome;
 })();
 
-console.log('Start polling...');
-activePollFor('comments');
+browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+    if (request.message === 'tab-updated') {
+        initializeDetoxifier();
+    }
+});
+
+initializeDetoxifier();
