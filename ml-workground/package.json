@@ -1,0 +1,26 @@
+{
+  "name": "detoxify",
+  "version": "1.0.0",
+  "description": "Copenhacks 2019 Competition Project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fsaina/detoxify.git"
+  },
+  "keywords": [
+    "toxic",
+    "comments",
+    "detection",
+    "extension",
+    "browser"
+  ],
+  "author": "Marin Vernier, Filip Saina",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fsaina/detoxify/issues"
+  },
+  "homepage": "https://github.com/fsaina/detoxify#readme"
+}
