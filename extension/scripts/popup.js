@@ -4,30 +4,12 @@ window.browser = (function () {
         window.chrome;
 })();
 
-// function sendMessageToTabs(tabs) {
-//     for (let tab of tabs) {
-//         browser.tabs.sendMessage(
-//             tab.id,
-//             {message: "pause"}
-//         );
-//     }
-// }
-//
-// function pauseInCurrentTab() {
-//     alert('CLicked');
-//     console.log('CLICKED');
-//     browser.tabs.query({
-//         currentWindow: true,
-//         active: true
-//     }).then(sendMessageToTabs);
-// }
-
 window.addEventListener('load', function load(event) {
-    document.getElementById("click-btn").addEventListener("click", function (e) {
-        console.log('CLICKED');
+    let toggleElement = document.getElementById("toggle-btn");
+    toggleElement.addEventListener("change", function (e) {
+        console.log('Changed to: ' + e.target.checked);
         browser.runtime.sendMessage({
-            'clicked' : true
+            'enabled' : e.target.checked
         });
     });
 });
-console.log('POPUP');

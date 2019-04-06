@@ -54,7 +54,9 @@ function addMutationObserverOnCommentsLoading(target) {
         mutations.forEach(function (mutation) {
             let commentNode = mutation.target.childNodes[globalCommentId];
             console.log('Mutation #' + globalCommentId + ': ' + commentNode);
-            markCommentIfToxic(commentNode);
+            if (isEnabled) {
+                markCommentIfToxic(commentNode);
+            }
             globalCommentId += 1;
         })
     });
@@ -108,6 +110,7 @@ function initializeDetoxifier() {
 }
 
 const classifier = new NaiveBayes();
+let isEnabled = true;
 let globalCommentId = 0;
 let observer;
 
@@ -123,7 +126,11 @@ browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     }
     if (request.message === 'pause') {
         console.log('Detoxify disabled!');
-
+        isEnabled = false;
+    }
+    if (request.message === 'resume') {
+        console.log('Detoxify enabled!');
+        isEnabled = true;
     }
 });
 

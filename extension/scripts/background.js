@@ -25,10 +25,10 @@ browser.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
 });
 
 browser.runtime.onMessage.addListener(function(message, sender) {
-    if (message.clicked) {
-        console.log('KLIKED');
-        browser.tabs.query({active: true, currentWindow: true}, function(tabs){
-            chrome.tabs.sendMessage(tabs[0].id, {message: "pause"}, function(response) {});
-        });
-    }
+    let isEnabled = message.enabled ? "resume" : "pause";
+    console.log('Toggle changed to: ' + message.enabled);
+
+    browser.tabs.query({active: true, currentWindow: true}, function(tabs){
+        browser.tabs.sendMessage(tabs[0].id, {message: isEnabled}, function(response) {});
+    });
 });
