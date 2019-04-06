@@ -1,0 +1,28 @@
+{
+  "manifest_version": 2,
+
+  "name": "Detoxify",
+  "description": "",
+  "version": "0.1",
+  "author": "FilipSaina_MarinVernier",
+
+  "icons": {
+    "48": "resource/icon.png"
+  },
+  "browser_action": {
+    "default_title": "Detoxify",
+    "default_popup": "static/popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://www.youtube.com/*"
+      ],
+      "js": ["scripts/bundle.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "permissions": [
+    "activeTab"
+  ]
+}
