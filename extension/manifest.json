@@ -13,6 +13,11 @@
     "default_title": "Detoxify",
     "default_popup": "static/popup.html"
   },
+  "background": {
+    "scripts" : [
+      "scripts/background.js"
+    ]
+  },
   "content_scripts": [
     {
       "matches": [
@@ -23,6 +28,7 @@
     }
   ],
   "permissions": [
-    "activeTab"
+    "activeTab",
+    "tabs"
   ]
 }
