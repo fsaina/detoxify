@@ -42,7 +42,18 @@ function markCommentIfToxic(commentNode) {
         console.log('Toxic comment: ' + commentInnerText);
         addBlurFilter(commentTextElement);
         addHooverListener(commentTextElement);
+        hideReplies(commentNode);
     }
+}
+
+function hideReplies(commentNode) {
+    if (commentNode === null
+    || typeof(commentNode) === 'undefined'
+    || commentNode.children[1] === null
+    || typeof(commentNode.children[1]) === 'undefined') {
+        return;
+    }
+    commentNode.children[1].style.visibility='hidden'
 }
 
 function addMutationObserverOnCommentsLoading(target) {
