@@ -1,6 +1,5 @@
-// const Classifier = require('./classifier/classifier.js');
-const NaiveBayes = require('./classifier/bayes.js');
-// const Vectorizer = require('./classifier/vectorizer.js');
+const Classifier = require('./classifier/classifier.js');
+const Vectorizer = require('./classifier/vectorizer.js');
 
 /**
  * Returns 1 if comment is toxic, 0 otherwise.
@@ -8,8 +7,8 @@ const NaiveBayes = require('./classifier/bayes.js');
  * @param comment is null terminated string representation of a comment.
  */
 function classifyComment(comment) {
-    // const vector = vectorizer.vectorize(comment);
-    return classifier.categorize(comment);
+    const vector = vectorizer.vectorize(comment);
+    return classifier.predict(vector);
 }
 
 function addBlurFilter(element) {
@@ -52,7 +51,7 @@ function markCommentIfToxic(commentNode) {
     let commentInnerText = commentTextElement.innerText;
     globalCommentId += 1;
 
-    if (classifyComment(commentInnerText) === '1') {
+    if (classifyComment(commentInnerText) === 1) {
         console.log('Toxic comment: ' + commentInnerText);
         addBlurFilter(commentTextElement);
         addHooverListener(commentTextElement);
@@ -136,7 +135,8 @@ function initializeDetoxifier() {
     activePollFor('comments');
 }
 
-const classifier = new NaiveBayes();
+const classifier = new Classifier();
+const vectorizer = new Vectorizer();
 let isEnabled = true;
 let globalCommentId = 0;
 let toxicCommentsCounter = 0;
