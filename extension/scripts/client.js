@@ -32,8 +32,25 @@ function addHooverListener(child) {
 
 
 function markCommentIfToxic(commentNode) {
+    if (commentNode === null
+        || typeof(commentNode) === 'undefined'
+        || commentNode.children[0] === null
+        || typeof(commentNode.children[0]) === 'undefined'
+        || commentNode.children[0].children[1] === null
+        || typeof(commentNode.children[0].children[1]) === 'undefined'
+        || commentNode.children[0].children[1].children[1] === null
+        || typeof(commentNode.children[0].children[1].children[1]) === 'undefined'
+        || commentNode.children[0].children[1].children[1].children[1] === null
+        || typeof(commentNode.children[0].children[1].children[1].children[1]) === 'undefined'
+        || commentNode.children[0].children[1].children[1].children[1].children[0] === null
+        || typeof(commentNode.children[0].children[1].children[1].children[1].children[0]) === 'undefined') {
+        return;
+    }
+
+
     let commentTextElement = commentNode.children[0].children[1].children[1].children[1].children[0];
     let commentInnerText = commentTextElement.innerText;
+    globalCommentId += 1;
 
     if (classifyComment(commentInnerText) === '1') {
         console.log('Toxic comment: ' + commentInnerText);
@@ -68,7 +85,6 @@ function addMutationObserverOnCommentsLoading(target) {
             } else {
                 console.log('Skip detoxifying.')
             }
-            globalCommentId += 1;
         })
     });
 
