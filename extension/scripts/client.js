@@ -9,10 +9,7 @@ const NaiveBayes = require('./classifier/bayes.js');
  */
 function classifyComment(comment) {
     // const vector = vectorizer.vectorize(comment);
-    var classa = classifier.categorize(comment);
-    console.log(classa);
-    return classa;
-
+    return classifier.categorize(comment);
 }
 
 function addBlurFilter(element) {
@@ -43,6 +40,7 @@ function markCommentIfToxic(commentNode) {
         addBlurFilter(commentTextElement);
         addHooverListener(commentTextElement);
         hideReplies(commentNode);
+        toxicCommentsCounter += 1;
     }
 }
 
@@ -67,6 +65,8 @@ function addMutationObserverOnCommentsLoading(target) {
             console.log('Mutation #' + globalCommentId + ': ' + commentNode);
             if (isEnabled) {
                 markCommentIfToxic(commentNode);
+            } else {
+                console.log('Skip detoxifying.')
             }
             globalCommentId += 1;
         })
@@ -123,6 +123,7 @@ function initializeDetoxifier() {
 const classifier = new NaiveBayes();
 let isEnabled = true;
 let globalCommentId = 0;
+let toxicCommentsCounter = 0;
 let observer;
 
 window.browser = (function () {
@@ -147,7 +148,7 @@ browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         sendResponse({enabled: isEnabled});
     }
     if (request.message === 'toxicCounter') {
-        sendResponse({toxicCounter: '5'});
+        sendResponse({toxicCounter: toxicCommentsCounter});
     }
 });
 
