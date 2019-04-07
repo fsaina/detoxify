@@ -7,9 +7,9 @@ window.browser = (function () {
 function onPageUnsuported() {
     document.getElementById("toggle-btn").disabled = true;
     document.getElementById("toggle-btn").checked = false;
-    document.getElementById("txt1").innerText = "Sorry, this domain is not supported";
+    document.getElementById("txt1").innerText = "Sorry, this domain is not supported ...yet :)";
     document.getElementById("counter").innerText = "  ";
-    document.getElementById("txt2").innerText = "...yet :)";
+    document.getElementById("txt2").innerText = "";
     document.getElementById("txt3").innerText = "";
 }
 
