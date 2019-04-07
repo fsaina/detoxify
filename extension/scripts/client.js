@@ -1,5 +1,6 @@
 const Classifier = require('./classifier/classifier.js');
 const Vectorizer = require('./classifier/vectorizer.js');
+const Matcher = require('./classifier/matcher.js');
 
 /**
  * Returns 1 if comment is toxic, 0 otherwise.
@@ -7,6 +8,9 @@ const Vectorizer = require('./classifier/vectorizer.js');
  * @param comment is null terminated string representation of a comment.
  */
 function classifyComment(comment) {
+    if (matcher.check_match(comment) === 1) {
+        return 1;
+    }
     const vector = vectorizer.vectorize(comment);
     return classifier.predict(vector);
 }
@@ -51,7 +55,7 @@ function markCommentIfToxic(commentNode) {
     let commentInnerText = commentTextElement.innerText;
     globalCommentId += 1;
 
-    if (classifyComment(commentInnerText) === 1) {
+    if (classifyComment(commentInnerText.toLowerCase()) === 1) {
         console.log('Toxic comment: ' + commentInnerText);
         addBlurFilter(commentTextElement);
         addHooverListener(commentTextElement);
@@ -128,6 +132,7 @@ function activePollFor(elementId) {
 function initializeDetoxifier() {
     console.log('Initializing detoxification...');
     globalCommentId = 0;
+    toxicCommentsCounter = 0;
     if (observer !== undefined && observer !== null) {
         observer.disconnect();
     }
@@ -137,6 +142,7 @@ function initializeDetoxifier() {
 
 const classifier = new Classifier();
 const vectorizer = new Vectorizer();
+const matcher = new Matcher();
 let isEnabled = true;
 let globalCommentId = 0;
 let toxicCommentsCounter = 0;
