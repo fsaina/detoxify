@@ -143,6 +143,12 @@ browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         console.log('Detoxify enabled!');
         isEnabled = true;
     }
+    if (request.message === 'isEnabled') {
+        sendResponse({enabled: isEnabled});
+    }
+    if (request.message === 'toxicCounter') {
+        sendResponse({toxicCounter: '5'});
+    }
 });
 
 initializeDetoxifier();
